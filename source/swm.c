@@ -73,7 +73,7 @@ static void swm_subscribe_window(struct xcb_connection_t* connection,
 	                             event_mask_values);
 
 	/* border width */
-	uint32_t border_values[1] = { 44 };
+	uint32_t border_values[1] = { 0 };
 	xcb_configure_window(connection,
 	                     window,
 	                     XCB_CONFIG_WINDOW_BORDER_WIDTH,
