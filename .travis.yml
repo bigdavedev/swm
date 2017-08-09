@@ -1,6 +1,10 @@
 sudo: false
 language: generic
 
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/deps/cmake
+
 matrix:
   include:
     - os: linux
@@ -66,6 +70,18 @@ matrix:
           packages:
             - clang-3.6
             - libxcb1-dev
+
+install:
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir -pv "${DEPS_DIR}" && pushd "${DEPS_DIR}"
+  - |
+      if [[ -z $(ls -A "${DEPS_DIR}"/cmake/bin) ]]; then
+        CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"
+        mkdir -p cmake
+        travis_retry wget --no-check-certificate --quiet -O - "${CMAKE_URL}" | tar -xz --strip-components=1 -C cmake
+      fi
+      export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
+      popd
 
 before_script:
   - mkdir -p build

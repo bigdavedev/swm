@@ -42,7 +42,7 @@ static void swm_focus_window(struct xcb_connection_t* xcb_connection,
                              xcb_window_t             window,
                              enum focus_mode          mode)
 {
-	uint32_t values[1] = { (mode == FOCUS_MODE_ACTIVE) ? 0xffffff : 0xff0000 };
+	uint32_t values[1] = { (mode == FOCUS_MODE_ACTIVE) ? 0xffffffu : 0xff0000u };
 	xcb_change_window_attributes(xcb_connection,
 	                             window,
 	                             XCB_CW_BORDER_PIXMAP,
