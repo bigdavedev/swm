@@ -2,6 +2,8 @@ project (swm CXX)
 
 set (TARGET ${PROJECT_NAME})
 
+option (X86_BUILD "Target 32bit systems" ON)
+
 find_package (PkgConfig)
 pkg_search_module (XCB REQUIRED xcb)
 
@@ -11,7 +13,7 @@ target_compile_options (
 	${TARGET}
 
 	PUBLIC
-	-std=c++14
+	-std=c++17
 	-Wall
 	-Wextra
 	-Wpedantic
@@ -24,6 +26,15 @@ target_sources (
 	PUBLIC
 	swm.cpp
 )
+
+if (X86_BUILD)
+	set_target_properties (
+		${TARGET}
+		PROPERTIES
+		COMPILE_FLAGS "-m32"
+		LINK_FLAGS "-m32"
+	)
+endif ()
 
 target_link_libraries (
 	${TARGET}
